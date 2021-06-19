@@ -1,7 +1,7 @@
 package com.rsschool.quiz.entity
 
 var questions = listOf(
-    Question("How many time zones are there in Russia", "7", "8", "9", "10", "11", "11"),
+    Question("How many time zones are there in Russia?", "7", "8", "9", "10", "11", "11"),
     Question(
         "What’s the smallest country in the world?",
         "Belarus",
@@ -12,7 +12,7 @@ var questions = listOf(
         "Vatican"
     ),
     Question(
-        "What’s the capital of Canada? ",
+        "What’s the capital of Canada?",
         "Toronto",
         "Montreal",
         "Calgary",
@@ -42,4 +42,8 @@ var questions = listOf(
 
 fun getQuestion(pointer: Int): Question {
     return questions[pointer]
+}
+
+fun getAllQeustions(): List<Question> {
+    return questions
 }

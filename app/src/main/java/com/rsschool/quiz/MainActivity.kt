@@ -1,6 +1,9 @@
 package com.rsschool.quiz
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -16,33 +19,34 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnNextKeyPressed,
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        openQuestionFragment(0, 0)
+        openQuestionFragment(0, 0, intArrayOf(0, 0, 0, 0, 0))
     }
 
-    private fun openQuestionFragment(previousNumber: Int, correctAnswers: Int) {
-        val firstFragment: Fragment = QuestionFragment.newInstance(previousNumber, correctAnswers)
+    private fun openQuestionFragment(previousNumber: Int, correctAnswers: Int, answers: IntArray?) {
+        val firstFragment: Fragment =
+            QuestionFragment.newInstance(previousNumber, correctAnswers, answers)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(binding.container.id, firstFragment)
         transaction.commit()
     }
 
-    private fun openResultFragment(result: Int) {
-        val firstFragment: Fragment = ResultFragment.newInstance(result)
+    private fun openResultFragment(result: Int, answers: IntArray?) {
+        val firstFragment: Fragment = ResultFragment.newInstance(result, answers)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(binding.container.id, firstFragment)
         transaction.commit()
     }
 
 
-    override fun onNextKeyPressed(pointer: Int?, correctAnswers: Int?) {
+    override fun onNextKeyPressed(pointer: Int?, correctAnswers: Int?, answers: IntArray?) {
         if (pointer != null && correctAnswers != null && pointer < 5)
-            openQuestionFragment(pointer, correctAnswers)
+            openQuestionFragment(pointer, correctAnswers, answers)
         if (pointer != null && correctAnswers != null && pointer == 5)
-            openResultFragment(100)
+            openResultFragment(correctAnswers, answers)
     }
 
-    override fun onBackKeyPressed(pointer: Int?, correctAnswers: Int?) {
+    override fun onBackKeyPressed(pointer: Int?, correctAnswers: Int?, answers: IntArray?) {
         if (pointer != null && correctAnswers != null)
-            openQuestionFragment(pointer, correctAnswers)
+            openQuestionFragment(pointer, correctAnswers, answers)
     }
 }
